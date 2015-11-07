@@ -12,6 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.Nepian.Breeze.Configuration.Configuration;
 import com.Nepian.LoginManager.Configuration.Logger;
+import com.Nepian.LoginManager.Configuration.Messages;
 import com.Nepian.LoginManager.Configuration.Properties;
 import com.Nepian.LoginManager.Listener.Player.PlayerJoin;
 import com.Nepian.LoginManager.Listener.Player.PlayerQuit;
@@ -35,6 +36,8 @@ public class LoginManager extends JavaPlugin {
 
 	public void onEnable() {
 		Configuration.pairFileAndClass(loadFile("config.yml"), Properties.class);
+		Configuration.pairFileAndClass(loadFile("log-message.yml"), Logger.class);
+		Configuration.pairFileAndClass(loadFile("local.yml"), Messages.class);
 
 		registerEvents();
 		UserdataManager.load();
