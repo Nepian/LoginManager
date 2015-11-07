@@ -1,0 +1,4 @@
+name: LoginManager
+main: com.Nepian.LoginManager.LoginManager
+version: 0.0.1
+author: Nepian
