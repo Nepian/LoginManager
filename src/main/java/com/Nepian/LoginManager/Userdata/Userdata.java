@@ -1,4 +1,4 @@
-package com.Nepian.LoginManager.UUIDs;
+package com.Nepian.LoginManager.Userdata;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,6 +43,10 @@ public class Userdata {
 
 	public int getInt(String key) {
 		return (int) get(key);
+	}
+
+	public String getString(String key) {
+		return (String) get(key);
 	}
 
 	public void set(String key, Object value) {

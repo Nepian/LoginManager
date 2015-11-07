@@ -1,6 +1,6 @@
 package com.Nepian.LoginManager.Listener.UserdataLoad;
 
-import static com.Nepian.LoginManager.UUIDs.UserdataPath.*;
+import static com.Nepian.LoginManager.Userdata.UserdataPath.*;
 import static org.bukkit.event.EventPriority.*;
 
 import org.bukkit.entity.Player;
@@ -9,7 +9,7 @@ import org.bukkit.event.Listener;
 
 import com.Nepian.Breeze.Utils.PlayerUtil;
 import com.Nepian.LoginManager.Events.UserdataLoadEvent;
-import com.Nepian.LoginManager.UUIDs.Userdata;
+import com.Nepian.LoginManager.Userdata.Userdata;
 
 public class ExpLoading implements Listener {
 

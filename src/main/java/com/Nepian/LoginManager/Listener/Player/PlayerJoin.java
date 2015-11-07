@@ -12,9 +12,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 import com.Nepian.LoginManager.LoginManager;
 import com.Nepian.LoginManager.Events.UserdataLoadEvent;
-import com.Nepian.LoginManager.UUIDs.UUIDManager;
-import com.Nepian.LoginManager.UUIDs.Userdata;
-import com.Nepian.LoginManager.UUIDs.UserdataManager;
+import com.Nepian.LoginManager.Userdata.Userdata;
+import com.Nepian.LoginManager.Userdata.UserdataManager;
 
 public class PlayerJoin implements Listener {
 
@@ -31,7 +30,6 @@ public class PlayerJoin implements Listener {
 
 				if (userdata == null) {
 					userdata = new Userdata(uuid);
-					UUIDManager.addUUID(uuid, player.getName());
 					UserdataManager.put(uuid, userdata);
 				}
 

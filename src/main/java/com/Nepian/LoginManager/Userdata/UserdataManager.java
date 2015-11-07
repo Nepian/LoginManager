@@ -1,4 +1,4 @@
-package com.Nepian.LoginManager.UUIDs;
+package com.Nepian.LoginManager.Userdata;
 
 import java.io.File;
 import java.util.HashMap;

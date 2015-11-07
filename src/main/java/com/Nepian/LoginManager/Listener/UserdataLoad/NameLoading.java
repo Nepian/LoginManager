@@ -7,8 +7,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 import com.Nepian.LoginManager.Events.UserdataLoadEvent;
-import com.Nepian.LoginManager.UUIDs.Userdata;
-import com.Nepian.LoginManager.UUIDs.UserdataPath;
+import com.Nepian.LoginManager.Userdata.Userdata;
+import com.Nepian.LoginManager.Userdata.UserdataPath;
 
 public class NameLoading implements Listener {
 

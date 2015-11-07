@@ -3,8 +3,6 @@ package com.Nepian.Breeze.Utils;
 import java.util.Arrays;
 import java.util.regex.Pattern;
 
-
-
 public class XpUtil {
 	private static int[] totalExpToReachLevel;	/* レベル毎の経験値総量を記録しておく */
 

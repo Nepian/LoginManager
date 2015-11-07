@@ -1,5 +1,9 @@
 package com.Nepian.Breeze.Utils;
 
+import java.util.UUID;
+
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 public class PlayerUtil {
@@ -135,5 +139,35 @@ public class PlayerUtil {
 	 */
 	public static Player clearExp(Player player) {
 		return  setExp(player, 0);
+	}
+
+	/**
+	 * UUIDからプレイヤーの名前を取得
+	 * @param uuid 対象のUUID
+	 * @return String 存在しない場合は、nullを返す
+	 */
+	public static String getName(UUID uuid) {
+		for (OfflinePlayer player : Bukkit.getOfflinePlayers()) {
+			if (player.getUniqueId().equals(uuid)) {
+				return player.getName();
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * プレイヤー名からUUIDを取得
+	 * @param name 対象のプレイヤー名
+	 * @return UUID 存在しない場合は、nullを返す
+	 */
+	public static UUID getUUID(String name) {
+		for (OfflinePlayer player : Bukkit.getOfflinePlayers()) {
+			if (player.getName().equals(name)) {
+				return player.getUniqueId();
+			}
+		}
+
+		return null;
 	}
 }

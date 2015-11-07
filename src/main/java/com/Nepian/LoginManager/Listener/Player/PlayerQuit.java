@@ -12,8 +12,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import com.Nepian.LoginManager.LoginManager;
 import com.Nepian.LoginManager.Events.UserdataSaveEvent;
-import com.Nepian.LoginManager.UUIDs.Userdata;
-import com.Nepian.LoginManager.UUIDs.UserdataManager;
+import com.Nepian.LoginManager.Userdata.Userdata;
+import com.Nepian.LoginManager.Userdata.UserdataManager;
 
 public class PlayerQuit implements Listener {
 

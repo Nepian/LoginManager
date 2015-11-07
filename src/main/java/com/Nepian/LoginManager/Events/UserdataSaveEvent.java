@@ -4,7 +4,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-import com.Nepian.LoginManager.UUIDs.Userdata;
+import com.Nepian.LoginManager.Userdata.Userdata;
 
 public class UserdataSaveEvent extends Event {
 	private static final HandlerList handlers = new HandlerList();

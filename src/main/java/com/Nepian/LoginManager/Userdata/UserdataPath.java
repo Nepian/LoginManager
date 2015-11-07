@@ -1,4 +1,4 @@
-package com.Nepian.LoginManager.UUIDs;
+package com.Nepian.LoginManager.Userdata;
 
 public class UserdataPath {
 	public static final String NAME = "Name";
