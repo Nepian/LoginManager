@@ -2,6 +2,7 @@ package com.Nepian.LoginManager.UUIDs;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 import java.util.UUID;
 
 import org.bukkit.configuration.file.FileConfiguration;
@@ -13,6 +14,8 @@ public class Userdata {
 	private UUID uuid;
 	private File file;
 	private FileConfiguration dataFile;
+
+	private Map<String, Object> data;
 
 	/* Constructor ----------------------------------------------------------*/
 
@@ -28,10 +31,43 @@ public class Userdata {
 		this.loadUserData();
 	}
 
-	/* Methods --------------------------------------------------------------*/
+	/* Public Methods -------------------------------------------------------*/
+
+	public boolean has(String key) {
+		return data.containsKey(key);
+	}
+
+	public Object get(String key) {
+		return data.get(key);
+	}
+
+	public int getInt(String key) {
+		return (int) get(key);
+	}
+
+	public void set(String key, Object value) {
+		data.put(key, value);
+	}
+
+	public void save(String key) {
+		dataFile.set(key, data.get(key));
+		try {
+			dataFile.save(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void save() {
+		for (String key : data.keySet()) {
+			save(key);
+		}
+	}
+
+	/* Private Methods ------------------------------------------------------*/
 
 	private void loadUserDataFile() {
-		File dataFolder = LoginManager.getUserDataFolder();
+		File dataFolder = LoginManager.getUserdataFolder();
 		String fileName = uuid.toString() + ".yml";
 
 		file = new File(dataFolder, fileName);
@@ -48,24 +84,8 @@ public class Userdata {
 	private void loadUserData() {
 		if (file.exists()) {
 			dataFile = YamlConfiguration.loadConfiguration(file);
+			setData(dataFile.getValues(true));
 		}
-	}
-
-	public void setData(String path, Object value) {
-		dataFile.set(path, value);
-		try {
-			dataFile.save(file);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public int getInt(String path) {
-		return dataFile.getInt(path);
-	}
-
-	public boolean hasPath(String path) {
-		return dataFile.contains(path);
 	}
 
 	/* Getter ---------------------------------------------------------------*/
@@ -74,5 +94,9 @@ public class Userdata {
 
 	public FileConfiguration getDataFile() { return dataFile; }
 
+	public Map<String, Object> getData() { return data; }
+
 	/* Setter ---------------------------------------------------------------*/
+
+	private void setData(Map<String, Object> data) { this.data = data; }
 }

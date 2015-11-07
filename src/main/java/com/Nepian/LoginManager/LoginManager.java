@@ -11,32 +11,29 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.Nepian.LoginManager.Configuration.Logger;
 import com.Nepian.LoginManager.Listener.Player.PlayerJoin;
-import com.Nepian.LoginManager.Listener.Player.PlayerLeave;
+import com.Nepian.LoginManager.Listener.Player.PlayerQuit;
 import com.Nepian.LoginManager.Listener.UserdataLoad.ExpLoading;
+import com.Nepian.LoginManager.Listener.UserdataSave.ExpSaving;
 import com.Nepian.LoginManager.UUIDs.UUIDManager;
 import com.Nepian.LoginManager.UUIDs.UserdataManager;
 
 public class LoginManager extends JavaPlugin {
 	private static LoginManager plugin;
 	private static File dataFolder;
-	private static File userDataFolder;
+	private static File userdataFolder;
 
 	public LoginManager() {
 		dataFolder = getDataFolder();
 		plugin = this;
 	}
 
+	/* Methods --------------------------------------------------------------*/
+
 	public void onEnable() {
 		saveDefaultConfig();
+		loadUserdataFolder();
 
 		registerEvents();
-
-		userDataFolder = new File(dataFolder, "userdata");
-		if (!userDataFolder.exists()) {
-			userDataFolder.mkdirs();
-			Logger.log(USERDATA_FOLDER_MAKING);
-		}
-
 		UUIDManager.load();
 		UserdataManager.load();
 
@@ -44,16 +41,33 @@ public class LoginManager extends JavaPlugin {
 	}
 
 	public void onDisable() {
+		UserdataManager.save();
+
 		Logger.log(PLUGIN_DISABLE);
+	}
+
+	public static void callEvent(Event event) {
+		Bukkit.getPluginManager().callEvent(event);
+	}
+
+	/* Private Methods ------------------------------------------------------*/
+
+	private static void loadUserdataFolder() {
+		userdataFolder = new File(dataFolder, "userdata");
+		if (!userdataFolder.exists()) {
+			userdataFolder.mkdirs();
+			Logger.log(USERDATA_FOLDER_MAKING);
+		}
 	}
 
 	/* Event registers ------------------------------------------------------*/
 
 	private void registerEvents() {
 		registerUserdatataLoadEvent();
+		registerUserdataSaveEvent();
 
 		registerEvent(new PlayerJoin());
-		registerEvent(new PlayerLeave());
+		registerEvent(new PlayerQuit());
 	}
 
 	public void registerEvent(Listener listener) {
@@ -64,17 +78,13 @@ public class LoginManager extends JavaPlugin {
 		registerEvent(new ExpLoading());
 	}
 
-	/*-----------------------------------------------------------------------*/
-
-	public static LoginManager getPlugin() {
-		return plugin;
+	private void registerUserdataSaveEvent() {
+		registerEvent(new ExpSaving());
 	}
 
-	public static File getUserDataFolder() {
-		return userDataFolder;
-	}
+	/* Getter ---------------------------------------------------------------*/
 
-	public static void callEvent(Event event) {
-		Bukkit.getPluginManager().callEvent(event);
-	}
+	public static LoginManager getPlugin() { return plugin; }
+
+	public static File getUserdataFolder() { return userdataFolder; }
 }

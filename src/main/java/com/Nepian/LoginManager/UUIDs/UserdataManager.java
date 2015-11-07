@@ -27,14 +27,21 @@ public class UserdataManager {
 		userdatas.put(uuid, userdata);
 	}
 
+	public static Userdata getUserdata(UUID uuid) {
+		return userdatas.get(uuid);
+	}
+
 	public static void load() {
-		for (File file : LoginManager.getUserDataFolder().listFiles()) {
+		for (File file : LoginManager.getUserdataFolder().listFiles()) {
 			put(new Userdata(file));
 		}
 		Logger.log(Logger.USERDATA_LOAD);
 	}
 
-	public static Userdata getUserdata(UUID uuid) {
-		return userdatas.get(uuid);
+	public static void save() {
+		for (Userdata userdata : userdatas.values()) {
+			userdata.save();
+		}
+		Logger.log(Logger.USERDATA_SAVE_ALL);
 	}
 }

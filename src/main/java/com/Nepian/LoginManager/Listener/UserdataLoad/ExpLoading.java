@@ -18,8 +18,8 @@ public class ExpLoading implements Listener {
 		Player player = event.getPlayer();
 		Userdata userdata = event.getUserdata();
 
-		if (!userdata.hasPath(EXP_PATH)) {
-			userdata.setData(EXP_PATH, PlayerUtil.getExp(player));
+		if (!userdata.has(EXP_PATH)) {
+			userdata.set(EXP_PATH, PlayerUtil.getExp(player));
 		}
 
 		PlayerUtil.setExp(player, userdata.getInt(EXP_PATH));
