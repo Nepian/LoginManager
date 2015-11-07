@@ -3,13 +3,16 @@ package com.Nepian.LoginManager;
 import static com.Nepian.LoginManager.Configuration.Logger.*;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.Nepian.Breeze.Configuration.Configuration;
 import com.Nepian.LoginManager.Configuration.Logger;
+import com.Nepian.LoginManager.Configuration.Properties;
 import com.Nepian.LoginManager.Listener.Player.PlayerJoin;
 import com.Nepian.LoginManager.Listener.Player.PlayerQuit;
 import com.Nepian.LoginManager.Listener.UserdataLoad.ExpLoading;
@@ -24,14 +27,14 @@ public class LoginManager extends JavaPlugin {
 
 	public LoginManager() {
 		dataFolder = getDataFolder();
+		userdataFolder = loadFolder("userdata");
 		plugin = this;
 	}
 
 	/* Methods --------------------------------------------------------------*/
 
 	public void onEnable() {
-		saveDefaultConfig();
-		loadUserdataFolder();
+		Configuration.pairFileAndClass(loadFile("config.yml"), Properties.class);
 
 		registerEvents();
 		UserdataManager.load();
@@ -49,15 +52,46 @@ public class LoginManager extends JavaPlugin {
 		Bukkit.getPluginManager().callEvent(event);
 	}
 
-	/* Private Methods ------------------------------------------------------*/
+	public static File loadFile(String string) {
+		File file = new File(dataFolder, string);
 
-	private static void loadUserdataFolder() {
-		userdataFolder = new File(dataFolder, "userdata");
-		if (!userdataFolder.exists()) {
-			userdataFolder.mkdirs();
-			Logger.log(USERDATA_FOLDER_MAKING);
-		}
+		return loadFile(file);
 	}
+
+	public static File loadFile(File file) {
+		if (!file.exists()) {
+			try {
+				if (file.getParent() != null) {
+					file.getParentFile().mkdirs();
+				}
+
+				file.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return file;
+	}
+
+	public static File loadFolder(String string) {
+		File file = new File(dataFolder, string);
+
+		return loadFolder(file);
+	}
+
+	public static File loadFolder(File file) {
+		if (!file.exists()) {
+			if (file.getParent() != null) {
+				file.getParentFile().mkdirs();
+			}
+			file.mkdir();
+		}
+
+		return file;
+	}
+
+	/* Private Methods ------------------------------------------------------*/
 
 	/* Event registers ------------------------------------------------------*/
 
@@ -69,7 +103,7 @@ public class LoginManager extends JavaPlugin {
 		registerEvent(new PlayerQuit());
 	}
 
-	public void registerEvent(Listener listener) {
+	private void registerEvent(Listener listener) {
 		getServer().getPluginManager().registerEvents(listener, this);
 	}
 

@@ -1,10 +1,10 @@
 package com.Nepian.LoginManager.Listener.UserdataSave;
 
-import static com.Nepian.LoginManager.Userdata.UserdataPath.*;
-import static org.bukkit.event.EventPriority.*;
+import static com.Nepian.LoginManager.Configuration.Properties.*;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
 import com.Nepian.Breeze.Utils.PlayerUtil;
@@ -13,11 +13,11 @@ import com.Nepian.LoginManager.Userdata.Userdata;
 
 public class ExpSaving implements Listener {
 
-	@EventHandler(priority = LOWEST)
+	@EventHandler(priority = EventPriority.LOWEST)
 	public static void onUserdataSave(UserdataSaveEvent event) {
 		Player player = event.getPlayer();
 		Userdata userdata = event.getUserdata();
 
-		userdata.set(EXP, PlayerUtil.getExp(player));
+		userdata.set(EXP_PATH, PlayerUtil.getExp(player));
 	}
 }

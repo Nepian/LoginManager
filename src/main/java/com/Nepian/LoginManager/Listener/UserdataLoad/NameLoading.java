@@ -1,24 +1,24 @@
 package com.Nepian.LoginManager.Listener.UserdataLoad;
 
-import static org.bukkit.event.EventPriority.*;
+import static com.Nepian.LoginManager.Configuration.Properties.*;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
 import com.Nepian.LoginManager.Events.UserdataLoadEvent;
 import com.Nepian.LoginManager.Userdata.Userdata;
-import com.Nepian.LoginManager.Userdata.UserdataPath;
 
 public class NameLoading implements Listener {
 
-	@EventHandler(priority = MONITOR)
+	@EventHandler(priority = EventPriority.MONITOR)
 	public static void onUserdataLoad(UserdataLoadEvent event) {
 		Player player = event.getPlayer();
 		Userdata userdata = event.getUserdata();
 
-		if (!userdata.has(UserdataPath.NAME)) {
-			userdata.set(UserdataPath.NAME, player.getName());
+		if (!userdata.has(NAME_PATH)) {
+			userdata.set(NAME_PATH, player.getName());
 		}
 	}
 }
