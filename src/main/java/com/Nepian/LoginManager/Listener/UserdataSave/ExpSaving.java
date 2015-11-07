@@ -18,6 +18,6 @@ public class ExpSaving implements Listener {
 		Player player = event.getPlayer();
 		Userdata userdata = event.getUserdata();
 
-		userdata.set(EXP_PATH, PlayerUtil.getExp(player));
+		userdata.set(EXP, PlayerUtil.getExp(player));
 	}
 }

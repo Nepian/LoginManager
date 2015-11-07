@@ -27,10 +27,9 @@ public class PlayerQuit implements Listener {
 				Player player = event.getPlayer();
 				UUID uuid = player.getUniqueId();
 				Userdata userdata = UserdataManager.getUserdata(uuid);
-
 				UserdataSaveEvent saveEvent = new UserdataSaveEvent(player, userdata);
-				LoginManager.callEvent(saveEvent);
 
+				LoginManager.callEvent(saveEvent);
 				userdata.save();
 			}
 

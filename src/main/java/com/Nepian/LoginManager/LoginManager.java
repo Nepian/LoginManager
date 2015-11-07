@@ -13,7 +13,9 @@ import com.Nepian.LoginManager.Configuration.Logger;
 import com.Nepian.LoginManager.Listener.Player.PlayerJoin;
 import com.Nepian.LoginManager.Listener.Player.PlayerQuit;
 import com.Nepian.LoginManager.Listener.UserdataLoad.ExpLoading;
+import com.Nepian.LoginManager.Listener.UserdataLoad.NameLoading;
 import com.Nepian.LoginManager.Listener.UserdataSave.ExpSaving;
+import com.Nepian.LoginManager.Listener.UserdataSave.NameSaving;
 import com.Nepian.LoginManager.UUIDs.UUIDManager;
 import com.Nepian.LoginManager.UUIDs.UserdataManager;
 
@@ -75,10 +77,12 @@ public class LoginManager extends JavaPlugin {
 	}
 
 	private void registerUserdatataLoadEvent() {
+		registerEvent(new NameLoading());
 		registerEvent(new ExpLoading());
 	}
 
 	private void registerUserdataSaveEvent() {
+		registerEvent(new NameSaving());
 		registerEvent(new ExpSaving());
 	}
 

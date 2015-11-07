@@ -1,27 +1,24 @@
 package com.Nepian.LoginManager.Listener.UserdataLoad;
 
-import static com.Nepian.LoginManager.UUIDs.UserdataPath.*;
 import static org.bukkit.event.EventPriority.*;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
-import com.Nepian.Breeze.Utils.PlayerUtil;
 import com.Nepian.LoginManager.Events.UserdataLoadEvent;
 import com.Nepian.LoginManager.UUIDs.Userdata;
+import com.Nepian.LoginManager.UUIDs.UserdataPath;
 
-public class ExpLoading implements Listener {
+public class NameLoading implements Listener {
 
 	@EventHandler(priority = MONITOR)
 	public static void onUserdataLoad(UserdataLoadEvent event) {
 		Player player = event.getPlayer();
 		Userdata userdata = event.getUserdata();
 
-		if (!userdata.has(EXP)) {
-			userdata.set(EXP, PlayerUtil.getExp(player));
+		if (!userdata.has(UserdataPath.NAME)) {
+			userdata.set(UserdataPath.NAME, player.getName());
 		}
-
-		PlayerUtil.setExp(player, userdata.getInt(EXP));
 	}
 }

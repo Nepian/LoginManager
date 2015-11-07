@@ -36,7 +36,9 @@ public class PlayerJoin implements Listener {
 				}
 
 				UserdataLoadEvent loadEvent = new UserdataLoadEvent(player, userdata);
+
 				LoginManager.callEvent(loadEvent);
+				userdata.save();
 			}
 
 		});
