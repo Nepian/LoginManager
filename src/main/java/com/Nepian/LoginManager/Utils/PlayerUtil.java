@@ -1,10 +1,12 @@
-package com.Nepian.Breeze.Utils;
+package com.Nepian.LoginManager.Utils;
 
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+
+import com.Nepian.Breeze.Utils.XpUtil;
 
 public class PlayerUtil {
 	public static final int MAX_EXP = 2100000000;
@@ -78,7 +80,7 @@ public class PlayerUtil {
 	 * @return EXP‚ðÝ’è‚µ‚½ƒvƒŒƒCƒ„[
 	 */
 	public static Player setExp(Player player, int quantity) {
-		int exp = (quantity > MAX_EXP) ? MAX_EXP : (quantity < 0) ? 0 : quantity;
+		int exp = Math.min(MAX_EXP, Math.max(0, quantity));
 		int xp = XpUtil.convertExpToXp(exp);
 
 		float expPercentage = (float) (exp - XpUtil.convertXpToExp(xp))
