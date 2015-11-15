@@ -8,9 +8,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 public enum Config {
 	PLAYERDATA__LOAD__NAME(true),
-	PLAYERDATA__LOAD__EXP(true),
-	PLAYERDATA__SAVE__NAME(false),
-	PLAYERDATA__SAVE__EXP(true),
+	PLAYERDATA__LOAD__XP(true),
+	PLAYERDATA__SAVE__XP(true),
 	LANG("lang-jp.yml"),
 	DEBUG(true);
 
@@ -34,7 +33,7 @@ public enum Config {
 
 	public static void load(File file) {
 		read(file);
-		write(file);
+		save(file);
 	}
 
 	public static void save(File file) {
@@ -61,6 +60,8 @@ public enum Config {
 				key.value = conf.get(path);
 			}
 		}
+
+		Logger.debug(Logger.CONFIG_LOAD.get());
 	}
 
 	private static void write(File file) {
@@ -72,6 +73,7 @@ public enum Config {
 
 		try {
 			conf.save(file);
+			Logger.debug(Logger.CONFIG_WRITE.get());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

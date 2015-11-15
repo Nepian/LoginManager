@@ -38,7 +38,7 @@ public enum Messages {
 
 	public static void load(File file) {
 		read(file);
-		write(file);
+		save(file);
 	}
 
 	public static void save(File file) {
@@ -69,6 +69,8 @@ public enum Messages {
 				key.message = (String) conf.get(path);
 			}
 		}
+
+		Logger.debug(Logger.LANG_LOAD.get());
 	}
 
 	private static void write(File file) {
@@ -80,6 +82,7 @@ public enum Messages {
 
 		try {
 			conf.save(file);
+			Logger.debug(Logger.LANG_WRITE.get());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

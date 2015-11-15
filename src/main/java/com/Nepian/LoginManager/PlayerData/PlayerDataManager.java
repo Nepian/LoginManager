@@ -8,25 +8,35 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.server.PluginDisableEvent;
 
 import com.Nepian.LoginManager.LoginManager;
 import com.Nepian.LoginManager.Configuration.Files;
+import com.Nepian.LoginManager.Configuration.Logger;
 import com.Nepian.LoginManager.Events.PlayerDataLoadEvent;
 import com.Nepian.LoginManager.Events.PlayerDataSaveEvent;
 
-public class PlayerDataManager {
-	private static final File folder = Files.FOLDER_PLAYERDATA;
+public class PlayerDataManager implements Listener {
+	private static final File folder;
 	private static Map<UUID, PlayerData> playerDatas;
+
+	static {
+		folder = Files.FOLDER_PLAYERDATA;
+		playerDatas = new HashMap<UUID, PlayerData>();
+	}
 
 	/* Methods --------------------------------------------------------------*/
 
 	public static void load() {
 		readPlayerData();
-		loadPlayerData();
 	}
 
 	public static void save() {
-		savePlayerData();
 		writePlayerData();
 	}
 
@@ -60,28 +70,15 @@ public class PlayerDataManager {
 
 			datas.put(uuid, data);
 		}
-
 		playerDatas = datas;
+		Logger.debug(Logger.PLAYERDATA_READ_ALL.get());
 	}
 
 	private static void writePlayerData() {
 		for (PlayerData data : playerDatas.values()) {
 			data.write();
 		}
-	}
-
-	private static void loadPlayerData() {
-		for (Player player : Bukkit.getOnlinePlayers()) {
-			PlayerData data = playerDatas.get(player.getUniqueId());
-			LoginManager.callEvent(new PlayerDataLoadEvent(player, data));
-		}
-	}
-
-	private static void savePlayerData() {
-		for (Player player : Bukkit.getOnlinePlayers()) {
-			PlayerData data = playerDatas.get(player.getUniqueId());
-			LoginManager.callEvent(new PlayerDataSaveEvent(player, data));
-		}
+		Logger.debug(Logger.PLAYERDATA_WRITE_ALL.get());
 	}
 
 	private static boolean registerPlayerData(UUID uuid) {
@@ -101,7 +98,7 @@ public class PlayerDataManager {
 			}
 		}
 
-		PlayerData data = new PlayerData(file);
+		PlayerData data = new PlayerData(file).read();
 
 		playerDatas.put(uuid, data);
 
@@ -122,5 +119,48 @@ public class PlayerDataManager {
 		registerPlayerData(uuid);
 
 		return playerDatas.get(uuid);
+	}
+
+	/* Listeners ------------------------------------------------------------*/
+
+	@EventHandler(priority = EventPriority.MONITOR)
+	public static void onPlayerJoin(final PlayerJoinEvent event) {
+		Bukkit.getScheduler().runTaskAsynchronously(LoginManager.getPlugin(), new Runnable() {
+			@Override
+			public void run() {
+				Player player = event.getPlayer();
+				PlayerData data = get(player, true);
+				PlayerDataLoadEvent loadEvent = new PlayerDataLoadEvent(player, data);
+
+				LoginManager.callEvent(loadEvent);
+			}
+		});
+	}
+
+	@EventHandler(priority = EventPriority.MONITOR)
+	public static void onPlayerQuit(final PlayerQuitEvent event) {
+		Bukkit.getScheduler().runTaskAsynchronously(LoginManager.getPlugin(), new Runnable() {
+			@Override
+			public void run() {
+				Player player = event.getPlayer();
+				PlayerData data = get(player, true);
+				PlayerDataSaveEvent saveEvent = new PlayerDataSaveEvent(player, data);
+
+				LoginManager.callEvent(saveEvent);
+			}
+		});
+	}
+
+	@EventHandler(priority = EventPriority.LOWEST)
+	public static void onPluginDisable(PluginDisableEvent event) {
+		if (!event.getPlugin().equals(LoginManager.getPlugin())) {
+			return;
+		}
+
+		for (Player player : Bukkit.getOnlinePlayers()) {
+			PlayerData data = get(player, true);
+			PlayerDataSaveEvent saveEvent = new PlayerDataSaveEvent(player, data);
+			LoginManager.callEvent(saveEvent);
+		}
 	}
 }

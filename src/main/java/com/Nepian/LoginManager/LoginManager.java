@@ -11,10 +11,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.Nepian.LoginManager.Configuration.Config;
 import com.Nepian.LoginManager.Configuration.Logger;
 import com.Nepian.LoginManager.Configuration.Messages;
-import com.Nepian.LoginManager.Listener.Player.PlayerJoin;
-import com.Nepian.LoginManager.Listener.Player.PlayerQuit;
 import com.Nepian.LoginManager.Listener.PlayerDataLoad.NameLoading;
 import com.Nepian.LoginManager.Listener.PlayerDataLoad.PlayerDataLoadWriting;
+import com.Nepian.LoginManager.Listener.PlayerDataLoad.XPLoading;
+import com.Nepian.LoginManager.Listener.PlayerDataSave.PlayerDataSaveWriting;
+import com.Nepian.LoginManager.Listener.PlayerDataSave.XPSaving;
 import com.Nepian.LoginManager.PlayerData.PlayerDataManager;
 
 public class LoginManager extends JavaPlugin {
@@ -46,6 +47,7 @@ public class LoginManager extends JavaPlugin {
 	}
 
 	public static void callEvent(Event event) {
+		Logger.debug("[Event] " + event.getEventName());
 		Bukkit.getPluginManager().callEvent(event);
 	}
 
@@ -54,16 +56,18 @@ public class LoginManager extends JavaPlugin {
 	private void registerEvents() {
 		registerPlayerDatataLoadEvent();
 		registerPlayerDataSaveEvent();
-		registerEvent(new PlayerJoin());
-		registerEvent(new PlayerQuit());
+		registerEvent(new PlayerDataManager());
 	}
 
 	private void registerPlayerDatataLoadEvent() {
 		registerEvent(new NameLoading());
+		registerEvent(new XPLoading());
 		registerEvent(new PlayerDataLoadWriting());
 	}
 
 	private void registerPlayerDataSaveEvent() {
+		registerEvent(new XPSaving());
+		registerEvent(new PlayerDataSaveWriting());
 	}
 
 	private void registerEvent(Listener listener) {

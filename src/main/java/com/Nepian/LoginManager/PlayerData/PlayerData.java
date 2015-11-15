@@ -31,6 +31,10 @@ public class PlayerData {
 		return (int) this.get(key);
 	}
 
+	public float getFloat(String key) {
+		return Float.valueOf(String.valueOf(this.get(key))) ;
+	}
+
 	public String getString(String key) {
 		return (String) this.get(key);
 	}
