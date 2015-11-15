@@ -3,32 +3,38 @@ package com.Nepian.LoginManager.Configuration;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
-import com.Nepian.Breeze.Configuration.Annotation.PrecededBySpace;
 import com.Nepian.LoginManager.LoginManager;
 
-public class Logger {
-	private static final LoginManager plugin = LoginManager.getPlugin();
+public enum Logger {
+	PREFIX("&3[&e{plugin}&3]&e "),
+	PLUGIN_ENABLE("{plugin} v{version} Enabled!"),
+	PLUGIN_DISABLE("{plugin} Disabled!");
 
-	@PrecededBySpace
-	public static String PREFIX = "&3[&e" + LoginManager.getPlugin().getName() + "&3] ";
+	private static final LoginManager plugin;
+	private String message;
 
-	@PrecededBySpace
-	public static String PLUGIN_ENABLE = plugin.getName() + " v" + plugin.getDescription().getVersion() + " Enabled!";
-	public static String PLUGIN_DISABLE = plugin.getName() + " Disabled!";
+	static {
+		plugin = LoginManager.getPlugin();
+	}
 
-	@PrecededBySpace
-	public static String USERDATA_FOLDER_MAKING = "ユーザデータフォルダを生成しました";
-	public static String USERDATA_UUID_LOAD = "UUIDを読み込みました";
-	public static String USERDATA_LOAD = "ユーザデータを読み込みました";
-	public static String USERDATA_SAVE_ALL = "ユーザデータを全て保存しました";
+	Logger(String message) {
+		this.message = message;
+	}
+
+	public String get() {
+		return this.message;
+	}
 
 	public static void log(String msg) {
-		msg = ChatColor.translateAlternateColorCodes('&', PREFIX + msg);
+		msg = ChatColor.translateAlternateColorCodes(
+			'&', PREFIX.get().replace("{plugin}", plugin.getName()) + msg);
 		Bukkit.getServer().getConsoleSender().sendMessage(msg);
 		return;
 	}
 
 	public static void debug(String msg) {
-		Logger.log("&7[&eDEBUG&7]&r " + msg);
+		if (Config.DEBUG.getBoolean()) {
+			Logger.log("&7[&eDEBUG&7]&r " + msg);
+		}
 	}
 }

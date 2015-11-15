@@ -3,37 +3,33 @@ package com.Nepian.LoginManager.Configuration;
 import java.io.File;
 import java.io.IOException;
 
-import org.bukkit.ChatColor;
-import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import com.Nepian.LoginManager.LoginManager;
+public enum Config {
+	PLAYERDATA__LOAD__NAME(true),
+	PLAYERDATA__LOAD__EXP(true),
+	PLAYERDATA__SAVE__NAME(false),
+	PLAYERDATA__SAVE__EXP(true),
+	LANG("lang-jp.yml"),
+	DEBUG(true);
 
-public enum Messages {
-	PREFIX("&3[&e{plugin}&3]&r ");
-
-	private static final LoginManager plugin;
-	private String message;
-
-	static {
-		plugin = LoginManager.getPlugin();
-	}
+	private Object value;
 
 	/* Constructor ----------------------------------------------------------*/
 
-	Messages(String message) {
-		this.message = message;
+	Config(Object value) {
+		this.value = value;
 	}
 
 	/* Methods --------------------------------------------------------------*/
 
-	public String get() {
-		return this.message;
+	public boolean getBoolean() {
+		return (boolean) this.get();
 	}
 
-	public static void sendPrefixMessage(CommandSender sender, String message) {
-		sendMessage(sender, prefix(message));
+	public String getString() {
+		return (String) this.get();
 	}
 
 	public static void load(File file) {
@@ -47,12 +43,8 @@ public enum Messages {
 
 	/* Private Methods ------------------------------------------------------*/
 
-	private static void sendMessage(CommandSender sender, String message) {
-		sender.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
-	}
-
-	private static String prefix(String message) {
-		return PREFIX.get().replace("{plugin}", plugin.getName()) + message;
+	private Object get() {
+		return this.value;
 	}
 
 	private String toPath() {
@@ -62,11 +54,11 @@ public enum Messages {
 	private static void read(File file) {
 		FileConfiguration conf = YamlConfiguration.loadConfiguration(file);
 
-		for (Messages key : values()) {
+		for (Config key : values()) {
 			String path = key.toPath();
 
 			if (conf.contains(path)) {
-				key.message = (String) conf.get(path);
+				key.value = conf.get(path);
 			}
 		}
 	}
@@ -74,8 +66,8 @@ public enum Messages {
 	private static void write(File file) {
 		FileConfiguration conf = YamlConfiguration.loadConfiguration(file);
 
-		for (Messages key : values()) {
-			conf.set(key.toPath(), key.message);
+		for (Config key : values()) {
+			conf.set(key.toPath(), key.value);
 		}
 
 		try {

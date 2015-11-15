@@ -2,8 +2,6 @@ package com.Nepian.LoginManager.Listener.Player;
 
 import static org.bukkit.event.EventPriority.*;
 
-import java.util.UUID;
-
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,9 +9,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import com.Nepian.LoginManager.LoginManager;
-import com.Nepian.LoginManager.Events.UserdataLoadEvent;
-import com.Nepian.LoginManager.Userdata.Userdata;
-import com.Nepian.LoginManager.Userdata.UserdataManager;
+import com.Nepian.LoginManager.Events.PlayerDataLoadEvent;
+import com.Nepian.LoginManager.PlayerData.PlayerData;
+import com.Nepian.LoginManager.PlayerData.PlayerDataManager;
 
 public class PlayerJoin implements Listener {
 
@@ -25,18 +23,10 @@ public class PlayerJoin implements Listener {
 			@Override
 			public void run() {
 				Player player = event.getPlayer();
-				UUID uuid = player.getUniqueId();
-				Userdata userdata = UserdataManager.getUserdata(uuid);
-
-				if (userdata == null) {
-					userdata = new Userdata(uuid);
-					UserdataManager.put(uuid, userdata);
-				}
-
-				UserdataLoadEvent loadEvent = new UserdataLoadEvent(player, userdata);
+				PlayerData data = PlayerDataManager.get(player, true);
+				PlayerDataLoadEvent loadEvent = new PlayerDataLoadEvent(player, data);
 
 				LoginManager.callEvent(loadEvent);
-				userdata.save();
 			}
 
 		});
