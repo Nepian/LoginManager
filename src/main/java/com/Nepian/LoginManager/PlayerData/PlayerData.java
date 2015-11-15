@@ -39,6 +39,10 @@ public class PlayerData {
 		return (String) this.get(key);
 	}
 
+	public Object get(String key) {
+		return this.playerData.get(key);
+	}
+
 	public PlayerData read() {
 		FileConfiguration data = YamlConfiguration.loadConfiguration(this.file);
 
@@ -61,11 +65,5 @@ public class PlayerData {
 		}
 
 		return this;
-	}
-
-	/* Private Methods ------------------------------------------------------*/
-
-	private Object get(String key) {
-		return this.playerData.get(key);
 	}
 }

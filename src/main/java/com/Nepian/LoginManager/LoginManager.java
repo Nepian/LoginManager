@@ -11,9 +11,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.Nepian.LoginManager.Configuration.Config;
 import com.Nepian.LoginManager.Configuration.Logger;
 import com.Nepian.LoginManager.Configuration.Messages;
+import com.Nepian.LoginManager.Listener.PlayerDataLoad.LocationLoading;
 import com.Nepian.LoginManager.Listener.PlayerDataLoad.NameLoading;
 import com.Nepian.LoginManager.Listener.PlayerDataLoad.PlayerDataLoadWriting;
 import com.Nepian.LoginManager.Listener.PlayerDataLoad.XPLoading;
+import com.Nepian.LoginManager.Listener.PlayerDataSave.LocationSaving;
 import com.Nepian.LoginManager.Listener.PlayerDataSave.PlayerDataSaveWriting;
 import com.Nepian.LoginManager.Listener.PlayerDataSave.XPSaving;
 import com.Nepian.LoginManager.PlayerData.PlayerDataManager;
@@ -62,11 +64,13 @@ public class LoginManager extends JavaPlugin {
 	private void registerPlayerDatataLoadEvent() {
 		registerEvent(new NameLoading());
 		registerEvent(new XPLoading());
+		registerEvent(new LocationLoading());
 		registerEvent(new PlayerDataLoadWriting());
 	}
 
 	private void registerPlayerDataSaveEvent() {
 		registerEvent(new XPSaving());
+		registerEvent(new LocationSaving());
 		registerEvent(new PlayerDataSaveWriting());
 	}
 

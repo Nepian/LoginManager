@@ -23,22 +23,22 @@ public class XPLoading implements Listener {
 		Player player = event.getPlayer();
 		PlayerData data = event.getPlayerData();
 
-		if (!data.hasData(XP_LEVEL_PATH)) {
-			data.setData(XP_LEVEL_PATH, player.getLevel());
+		if (!data.hasData(PATH_XP_LEVEL)) {
+			data.setData(PATH_XP_LEVEL, player.getLevel());
 		} else {
-			player.setLevel(data.getInt(XP_LEVEL_PATH));
+			player.setLevel(data.getInt(PATH_XP_LEVEL));
 		}
 
-		if (!data.hasData(XP_EXP_PATH)) {
-			data.setData(XP_EXP_PATH, player.getExp());
+		if (!data.hasData(PATH_XP_EXP)) {
+			data.setData(PATH_XP_EXP, player.getExp());
 		} else {
-			player.setExp(data.getFloat(XP_EXP_PATH));
+			player.setExp(data.getFloat(PATH_XP_EXP));
 		}
 
-		if (!data.hasData(XP_TOTALEXP_PATH)) {
-			data.setData(XP_TOTALEXP_PATH, player.getTotalExperience());
+		if (!data.hasData(PATH_XP_TOTALEXP)) {
+			data.setData(PATH_XP_TOTALEXP, player.getTotalExperience());
 		} else {
-			player.setTotalExperience(data.getInt(XP_TOTALEXP_PATH));
+			player.setTotalExperience(data.getInt(PATH_XP_TOTALEXP));
 		}
 	}
 }

@@ -9,7 +9,9 @@ import org.bukkit.configuration.file.YamlConfiguration;
 public enum Config {
 	PLAYERDATA__LOAD__NAME(true),
 	PLAYERDATA__LOAD__XP(true),
+	PLAYERDATA__LOAD__LOCATION(true),
 	PLAYERDATA__SAVE__XP(true),
+	PLAYERDATA__SAVE__LOCATION(true),
 	LANG("lang-jp.yml"),
 	DEBUG(true);
 
