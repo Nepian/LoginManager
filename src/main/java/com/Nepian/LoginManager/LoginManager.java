@@ -47,7 +47,7 @@ public class LoginManager extends JavaPlugin {
 	}
 
 	public static void callEvent(Event event) {
-		Logger.debug("[Event] " + event.getEventName());
+		Logger.debug("[&dEvent&r] " + event.getEventName());
 		Bukkit.getPluginManager().callEvent(event);
 	}
 

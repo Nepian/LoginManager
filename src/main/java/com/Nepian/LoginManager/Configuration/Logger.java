@@ -10,16 +10,16 @@ public enum Logger {
 	PLUGIN_ENABLE("{plugin} v{version} Enabled!"),
 	PLUGIN_DISABLE("{plugin} Disabled!"),
 
-	PLAYERDATA_READ("[READ] UUID.yml -> PlayerData"),
-	PLAYERDATA_WRITE("[WRITE] PlayerData -> UUID.yml"),
-	PLAYERDATA_READ_ALL("[READ] All UUID.yml -> All PlayerData"),
-	PLAYERDATA_WRITE_ALL("[WRITE] All PlayerData -> All UUID.yml"),
+	PLAYERDATA_READ("[&2Read&r] UUID.yml -> PlayerData"),
+	PLAYERDATA_WRITE("[&3WRITE&r] PlayerData -> UUID.yml"),
+	PLAYERDATA_READ_ALL("[&2Read&r] All UUID.yml -> All PlayerData"),
+	PLAYERDATA_WRITE_ALL("[&3WRITE&r] All PlayerData -> All UUID.yml"),
 
-	CONFIG_LOAD("[READ] config.yml -> Config"),
-	CONFIG_WRITE("[WRITE] Config -> config.yml"),
+	CONFIG_LOAD("[&2Read&r] config.yml -> Config"),
+	CONFIG_WRITE("[&3WRITE&r] Config -> config.yml"),
 
-	LANG_LOAD("[READ] lang-xx.yml -> Messages"),
-	LANG_WRITE("[WRITE] Messages -> lang-xx.yml");
+	LANG_LOAD("[&2Read&r] lang-xx.yml -> Messages"),
+	LANG_WRITE("[&3WRITE&r] Messages -> lang-xx.yml");
 
 	private static final LoginManager plugin;
 	private String message;
