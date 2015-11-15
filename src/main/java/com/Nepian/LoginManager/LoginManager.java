@@ -14,6 +14,7 @@ import com.Nepian.LoginManager.Configuration.Messages;
 import com.Nepian.LoginManager.Listener.Player.PlayerJoin;
 import com.Nepian.LoginManager.Listener.Player.PlayerQuit;
 import com.Nepian.LoginManager.Listener.PlayerDataLoad.NameLoading;
+import com.Nepian.LoginManager.Listener.PlayerDataLoad.PlayerDataLoadWriting;
 import com.Nepian.LoginManager.PlayerData.PlayerDataManager;
 
 public class LoginManager extends JavaPlugin {
@@ -31,11 +32,7 @@ public class LoginManager extends JavaPlugin {
 		PlayerDataManager.load();
 		registerEvents();
 
-		Logger.log(
-			PLUGIN_ENABLE.get()
-			.replace("{plugin}", this.getName())
-			.replace("{version}", this.getDescription().getVersion())
-		);
+		Logger.log(PLUGIN_ENABLE.get());
 	}
 
 	public void onDisable() {
@@ -63,6 +60,7 @@ public class LoginManager extends JavaPlugin {
 
 	private void registerPlayerDatataLoadEvent() {
 		registerEvent(new NameLoading());
+		registerEvent(new PlayerDataLoadWriting());
 	}
 
 	private void registerPlayerDataSaveEvent() {

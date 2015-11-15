@@ -22,12 +22,15 @@ public enum Logger {
 	}
 
 	public String get() {
+		this.message =
+			this.message
+			.replace("{plugin}", plugin.getName())
+			.replace("{version}", plugin.getDescription().getVersion());
 		return this.message;
 	}
 
 	public static void log(String msg) {
-		msg = ChatColor.translateAlternateColorCodes(
-			'&', PREFIX.get().replace("{plugin}", plugin.getName()) + msg);
+		msg = ChatColor.translateAlternateColorCodes('&', PREFIX.get() + msg);
 		Bukkit.getServer().getConsoleSender().sendMessage(msg);
 		return;
 	}

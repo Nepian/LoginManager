@@ -15,19 +15,19 @@ import com.Nepian.LoginManager.Events.PlayerDataLoadEvent;
 import com.Nepian.LoginManager.Events.PlayerDataSaveEvent;
 
 public class PlayerDataManager {
-	private static final File playerDataFolder = Files.FOLDER_PLAYERDATA;
+	private static final File folder = Files.FOLDER_PLAYERDATA;
 	private static Map<UUID, PlayerData> playerDatas;
 
 	/* Methods --------------------------------------------------------------*/
 
 	public static void load() {
-		readPlayerData(playerDataFolder);
+		readPlayerData();
 		loadPlayerData();
 	}
 
 	public static void save() {
 		savePlayerData();
-		writePlayerData(playerDataFolder);
+		writePlayerData();
 	}
 
 	public static void reload() {
@@ -51,12 +51,12 @@ public class PlayerDataManager {
 
 	/* Private Methods ------------------------------------------------------*/
 
-	private static void readPlayerData(File folder) {
+	private static void readPlayerData() {
 		Map<UUID, PlayerData> datas = new HashMap<UUID, PlayerData>();
 
 		for (File file : folder.listFiles()) {
 			UUID uuid = UUID.fromString(file.getName().replace(".yml", ""));
-			PlayerData data = new PlayerData(file);
+			PlayerData data = new PlayerData(file).read();
 
 			datas.put(uuid, data);
 		}
@@ -64,12 +64,9 @@ public class PlayerDataManager {
 		playerDatas = datas;
 	}
 
-	private static void writePlayerData(File folder) {
-
-		for (File file : folder.listFiles()) {
-			UUID uuid = UUID.fromString(file.getName().replace(".yml", ""));
-
-			playerDatas.get(uuid).write(file);
+	private static void writePlayerData() {
+		for (PlayerData data : playerDatas.values()) {
+			data.write();
 		}
 	}
 
@@ -89,7 +86,7 @@ public class PlayerDataManager {
 
 	private static boolean registerPlayerData(UUID uuid) {
 		String fileName = uuid.toString() + ".yml";
-		File file = new File(playerDataFolder, fileName);
+		File file = new File(folder, fileName);
 
 		if (!file.exists()) {
 			try {

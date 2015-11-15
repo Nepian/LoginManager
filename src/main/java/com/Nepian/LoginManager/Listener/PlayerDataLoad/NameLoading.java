@@ -12,8 +12,8 @@ import com.Nepian.LoginManager.PlayerData.PlayerData;
 
 public class NameLoading implements Listener {
 
-	@EventHandler(priority = EventPriority.MONITOR)
-	public static void onUserdataLoad(PlayerDataLoadEvent event) {
+	@EventHandler(priority = EventPriority.LOWEST)
+	public static void onPlayerDataLoad(PlayerDataLoadEvent event) {
 
 		if (!Config.PLAYERDATA__LOAD__NAME.getBoolean()) {
 			return;

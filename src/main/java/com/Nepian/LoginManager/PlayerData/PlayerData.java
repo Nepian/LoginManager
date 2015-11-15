@@ -9,11 +9,12 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 public class PlayerData {
 	private Map<String, Object> playerData;
+	private File file;
 
 	/* Constructor ----------------------------------------------------------*/
 
 	public PlayerData(File file) {
-		this.read(file);
+		this.file = file;
 	}
 
 	/* Methods --------------------------------------------------------------*/
@@ -34,16 +35,16 @@ public class PlayerData {
 		return (String) this.get(key);
 	}
 
-	public PlayerData read(File file) {
-		FileConfiguration data = YamlConfiguration.loadConfiguration(file);
+	public PlayerData read() {
+		FileConfiguration data = YamlConfiguration.loadConfiguration(this.file);
 
 		this.playerData = data.getValues(true);
 
 		return this;
 	}
 
-	public PlayerData write(File file) {
-		YamlConfiguration data = YamlConfiguration.loadConfiguration(file);
+	public PlayerData write() {
+		YamlConfiguration data = YamlConfiguration.loadConfiguration(this.file);
 
 		for (String key : this.playerData.keySet()) {
 			data.set(key, this.get(key));
